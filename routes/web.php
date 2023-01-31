@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', "AdvertController@index")->name('adverts.index');
+
+Route::get('/login')->name('login');
+Route::post('/login', "AuthController@auth");
+
+Route::post('/logout', "AuthController@logout")->name('logout');
+
+Route::get('/registrate')->name('registrate');
+Route::post('/registrate', "AuthController@registrate");
+
+Route::get('/addverts/create')->name('adverts.create');
+Route::post('/addverts/create', "AdvertController@create");
+
+Route::get('/addverts/{addvert}', "AdvertController@show")->name('adverts.show');
