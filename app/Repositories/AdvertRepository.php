@@ -40,35 +40,40 @@ class AdvertRepository
             $query->whereNot("user_id", $userId);
         }
 
-        if (isset($filters['minPayment']) || isset($filters['maxPayment'])) {
-            $minPayment = empty($filters) ? $filters['minPayment'] : null;
-            $maxPayment = empty($filters) ? $filters['maxPayment'] : null;
+        if (isset($filters['min_payment']) || isset($filters['max_payment'])) {
+            $minPayment = isset($filters['min_payment']) ? $filters['min_payment'] : null;
+            $maxPayment = isset($filters['max_payment']) ? $filters['max_payment'] : null;
             $query = $this->filtByPayment($query, $minPayment, $maxPayment);
         }
 
         if (isset($filters['type'])) {
-            $query = $this->filtByType($query, $filters['type']);
+
+            $query = $this->filtByType($query, AdvertType::fromName($filters['type']));
         }
 
-        if (isset($filters['sortByPayment'])) {
-            $query = $this->sort($query, "payment", $filters['sortByPayment']);
+        if (isset($filters['sort'])) {
+            $sort = explode("-", $filters['sort']);
+            $type = SortType::fromName($sort[1]);
+            if ($sort[0] == 'payment') {
+                $query = $this->sort($query, "payment", $type);
+            }
+            elseif ($sort[0] == 'date') {
+                $query = $this->sort($query, "updated_at", $type);
+            }
         }
-        elseif (isset($filters['sortByDate'])) {
-            $query = $this->sort($query, "updated_at", $filters['sortByPayment']);
-        }
+        
 
         return $query->get();
     }
 
-    private function filtByPayment($query, int $minPayment, int $maxPayment)
+    private function filtByPayment($query, ?int $minPayment, ?int $maxPayment)
     {
         $minPayment = $minPayment ?? 0;
-        if ($maxPayment === null) {
-            $maxPayment = Advert::orderByDesc('payment')
-                ->first()
-                ?->payment;
+        if ($maxPayment == null) {
+            $maxPayment = $this->maxPayment();
         }
 
+        
         return $query->whereBetween('payment', [$minPayment, $maxPayment]);
     }
 

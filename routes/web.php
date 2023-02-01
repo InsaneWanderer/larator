@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvertController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', "AdvertController@index")->name('adverts.index');
+Route::get('/{data?}', [AdvertController::class, 'index'])->name('adverts.index');
+Route::post('/filtrate', [AdvertController::class, 'filtindex'])->name('adverts.index.post');
 
 Route::get('/login')->name('login');
 Route::post('/login', "AuthController@auth");

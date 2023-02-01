@@ -7,17 +7,22 @@ use App\Enums\Advert\AdvertType;
 use App\Enums\Sort\SortType;
 use App\Services\AdvertService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
 class AdvertController extends Controller
 {
-    public function index(Request $request) {
+    public function index(array $data = null) {
+        return (new AdvertService())->index($data);
+    }
+
+    public function filtindex(Request $request) {
         $filters = $request->validate([
-            'minPayment' => ['sometimes', 'nullable', 'integer', 'min:0'],
-            'maxPayment' => ['sometimes', 'nullable', 'integer', 'min:0'],
-            'type' => ['sometimes', 'nullable', new Enum(AdvertType::class)],
-            'sortByPayment' => ['sometimes', 'nullable', new Enum(SortType::class)],
-            'sortByDate' => ['sometimes', 'nullable', new Enum(SortType::class)],
+            'min_payment' => ['sometimes', 'nullable', 'integer', 'min:0'],
+            'max_payment' => ['sometimes', 'nullable', 'integer', 'min:0'],
+            'type' => ['sometimes', 'nullable', Rule::in(AdvertType::casesString())],
+            'placement_type' => ['sometimes', 'nullable', Rule::in(AdvertPlacementType::casesString())],
+            'sort' => ['sometimes', 'string'],
         ]);
 
         return (new AdvertService())->list($filters);

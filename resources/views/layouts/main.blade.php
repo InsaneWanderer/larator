@@ -13,20 +13,20 @@
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="{{ HTML::style('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/nice-select.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/flaticon.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/gijgo.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/animate.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/slick.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('css/slicknav.css') }}">
-    <link rel="stylesheet" href="{{ HTML::style('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/gijgo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/slicknav.css') }}">
+    <link rel="stylesheet" href="{{ asset('https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css') }}">
 
-    <link rel="stylesheet" href="{{ HTML::style('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -39,19 +39,19 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html">
-                                        <img src="img/logo.png" alt="">
+                                    <a href="/">
+                                       <h3 style="color:white">Larator</h3>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-7">
+                            <div class="col-xl-5 col-lg-6">
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         
                                     </nav>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                                 <div class="Appointment">
                                     @if (Auth::user())
                                         <div class="book_btn d-none d-lg-block">
@@ -67,9 +67,6 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
-                            </div>
                         </div>
                     </div>
     
@@ -78,5 +75,43 @@
         </div>
     </header>
 
-    @section('content')
+    @yield("content")
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js"></script>
+
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"> </script>
+    <!-- JS here -->
+    <script src="{{ asset('js/vendor/modernizr-3.5.0.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/vendor/jquery-1.12.4.min.js') }}"></script> -->
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('js/ajax-form.js') }}"></script>
+    <script src="{{ asset('js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('js/scrollIt.js') }}"></script>
+    <script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
+    <script src="{{ asset('js/wow.min.js') }}"></script>
+    <script src="{{ asset('js/nice-select.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.slicknav.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('js/plugins.js') }}"></script>
+    <!-- <script src="{{ asset('js/gijgo.min.js') }}"></script> -->
+    <script src="{{ asset('js/slick.min.js') }}"></script>
+   
+
+    
+    <!--contact js-->
+    <script src="{{ asset('js/contact.js') }}"></script>
+    <script src="{{ asset('js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.form.js') }}"></script>
+    <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/mail-script.js') }}"></script>
+
+
+    <script src="{{ asset('js/main.js') }}"></script>
+    @yield('script')
 </body>
