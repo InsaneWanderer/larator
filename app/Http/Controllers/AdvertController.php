@@ -12,21 +12,25 @@ use Illuminate\Validation\Rules\Enum;
 
 class AdvertController extends Controller
 {
-    public function index(array $data = null) {
-        return (new AdvertService())->index($data);
-    }
+    public function index(Request $request) {
 
-    public function filtindex(Request $request) {
+        // dd($request);
         $filters = $request->validate([
             'min_payment' => ['sometimes', 'nullable', 'integer', 'min:0'],
             'max_payment' => ['sometimes', 'nullable', 'integer', 'min:0'],
             'type' => ['sometimes', 'nullable', Rule::in(AdvertType::casesString())],
             'placement_type' => ['sometimes', 'nullable', Rule::in(AdvertPlacementType::casesString())],
-            'sort' => ['sometimes', 'string'],
+            'sort' => ['sometimes', 'nullable', 'string'],
         ]);
-
-        return (new AdvertService())->list($filters);
+        // dd($filters, $request->all(), $request->method());
+        return (new AdvertService())->index($filters);
     }
+
+    // public function filtindex(Request $request) {
+        
+
+    //     return (new AdvertService())->list($filters);
+    // }
 
     public function create(Request $request)
     {

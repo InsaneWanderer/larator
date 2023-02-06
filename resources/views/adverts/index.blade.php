@@ -11,39 +11,40 @@
                                     <h3>Поиск</h3>
                                 </div>
                                 <div class="property_form">
-                                    <form name="frmmain" action="{{ route('adverts.index.post') }}" method="POST">
+                                    <form name="frmmain" action="" method="POST">
                                         @csrf
+                                        {{-- {{dd($selectedSort)}} --}}
                                         <div class="row">
                                             <div class="col-xl-12">
                                                 <div class="form_wrap d-flex">
                                                 <div class="single-field max_width ">
                                                     <label for="#">Тип объявления</label>
                                                     <select class="wide" name="type">
-                                                            <option data-display="Все" value="null">Все</option>
+                                                            <option data-display="Все" value="">Все</option>
                                                         @foreach ($types as $type)
-                                                            <option value="{{ $type->name }}" {{ $selectedType == $type ? "selected" : "" }}>{{ $type->ru() }}</option>
+                                                            <option value="{{ $type->name }}" {{ $selectedType == $type->name ? "selected" : "" }}>{{ $type->ru() }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="single_field range_slider">
                                                     <label for="#">Цена</label>
                                                     <div id="slider"></div>
-                                                    <input hidden name="min_payment">
-                                                    <input hidden name="max_payment">
+                                                    <input hidden name="min_payment" value="{{ $selectedMinPayment ?? 0 }}">
+                                                    <input hidden name="max_payment" value="{{ $selectedMaxPayment ?? $maxPayment }}">
                                                 </div>
                                                 <div class="single-field max_width ">
                                                     <label for="#">Тип помещения</label>
                                                     <select class="wide" name="placement_type" >
-                                                        <option data-display="Все" value="null">Все</option>
+                                                        <option data-display="Все" value="">Все</option>
                                                         @foreach ($placementTypes as $placementType)
-                                                            <option value="{{ $placementType->name }}" {{ $selectedPlacementType == $placementType ? "selected" : "" }}>{{ $placementType->ru() }}</option>
+                                                            <option value="{{ $placementType->name }}" {{ $selectedPlacementType == $placementType->name ? "selected" : "" }}>{{ $placementType->ru() }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>                                                            
                                                 <div class="single-field max_width ">
                                                     <label for="#">Сортировка</label>
                                                     <select class="wide" name="sort">
-                                                        <option data-display="Стандарт" value="null">Стандарт</option>
+                                                        <option data-display="Стандарт" value="">Стандарт</option>
                                                         @foreach ($sortVariants as $sortVariant)
                                                             @foreach ($sortTypes as $sortType)
                                                                 @php $strg = ($sortVariant == 'payment' ? 'Цена' : 'Дата') . ($sortType->name == 'Asc' ? ' по возр.' : ' по убыв.'); @endphp
@@ -52,7 +53,7 @@
                                                         @endforeach                                                                       
                                                     </select>
                                                 </div>
-                                                <button style="background-color: #FD8E5E" type="submit">
+                                                <button style="background-color: #FD8E5E" type="button" onclick="btnsend()">
                                                     <div class="serach_icon">
                                                         <a>
                                                             <i class="ti-search"></i>
@@ -102,6 +103,15 @@
                                 <ul>
                                     <li>
                                         <div class="single_info_doc">
+                                            <img src="img/svg_icon/bed.svg" alt="">
+                                            <span>{{ match ($advert->type) {
+                                                "Sell" => 'Продажа',
+                                                "Rent" => 'Аренда',
+                                            } }}</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="single_info_doc">
                                             <img src="img/svg_icon/square.svg" alt="">
                                             <span>{{ $advert->square }} кв.м.</span>
                                         </div>
@@ -128,9 +138,16 @@
 
 @section('script')
 <script>
+    window.onload = function () {
+        
+    }
+
     function btnsend() {
         var form = frmmain
-        console.log(form.elements);
+        for (var i = 0; i < form.elements.length; i++) {
+            var name = form.elements[i].name;
+            console.log(name + " " + form.elements[i].value);
+        }
         form.submit()
     }
 
@@ -157,10 +174,10 @@
     // // slider call
     $('#slider').slider({
         range: true,
-        min: 0,
+        min: {{ 0 }},
         max: {{ $maxPayment }},
         step: 1,
-        values: [getQueryString('minval') ? getQueryString('minval') : 0, getQueryString('maxval') ?
+        values: [getQueryString('minval') ? getQueryString('minval') : {{ 10  }}, getQueryString('maxval') ?
             getQueryString('maxval') : {{ $maxPayment }}
         ],
 

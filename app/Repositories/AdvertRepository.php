@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\Advert\AdvertPlacementType;
 use App\Enums\Advert\AdvertType;
 use App\Enums\Sort\SortType;
 use App\Models\Advert;
@@ -41,8 +42,8 @@ class AdvertRepository
         }
 
         if (isset($filters['min_payment']) || isset($filters['max_payment'])) {
-            $minPayment = isset($filters['min_payment']) ? $filters['min_payment'] : null;
-            $maxPayment = isset($filters['max_payment']) ? $filters['max_payment'] : null;
+            $minPayment = isset($filters['min_payment']) ? $filters['min_payment'] * 1000 : null;
+            $maxPayment = isset($filters['max_payment']) ? $filters['max_payment'] * 1000 : null;
             $query = $this->filtByPayment($query, $minPayment, $maxPayment);
         }
 
@@ -51,7 +52,12 @@ class AdvertRepository
             $query = $this->filtByType($query, AdvertType::fromName($filters['type']));
         }
 
-        if (isset($filters['sort'])) {
+        if (isset($filters['placement_type'])) {
+
+            $query = $this->filtByPlacementType($query, $filters['placement_type']);
+        }
+
+        if (isset($filters['sort'])  && $filters['sort'] != "null") {
             $sort = explode("-", $filters['sort']);
             $type = SortType::fromName($sort[1]);
             if ($sort[0] == 'payment') {
@@ -61,7 +67,7 @@ class AdvertRepository
                 $query = $this->sort($query, "updated_at", $type);
             }
         }
-        
+        // dd($filters, $query);
 
         return $query->get();
     }
@@ -80,6 +86,11 @@ class AdvertRepository
     private function filtByType($query, AdvertType $type)
     {
         return $query->where('type', $type->name);
+    }
+
+    public function filtByPlacementType($query, $placementType)
+    {
+        return $query->where('placement_type', $placementType);
     }
 
     private function sort($query, string $column, SortType $sortType)

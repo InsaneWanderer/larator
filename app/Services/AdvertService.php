@@ -25,34 +25,28 @@ class AdvertService
         return to_route('adverts.show', ['advert' => $advert]);
     }
 
-    public function index(?array $data = null)
+    public function index(?array $filters)
     {
-        dd($data);
-        if ($data === null) $data = [];
         $user = Auth::user();
-        $data = array_merge([
-            "adverts" => (new AdvertRepository())->filtered($user?->id),
+        return view('adverts.index', [
             "maxPayment" => ceil((new AdvertRepository())->maxPayment() / 1000),
             "types" => AdvertType::cases(),
             "placementTypes" => AdvertPlacementType::cases(),            
             "sortVariants" => ['payment', 'date'],
             "sortTypes" => SortType::cases(),"selectedType" => isset($filters['type']) ? $filters['type'] : null,
-            "selectedType" => null,
-            "selectedPlacementType" => null,
-            "selectedSort" => null,
-        ], $data);
-        return view('adverts.index', $data);
+            "adverts" => (new AdvertRepository())->filtered($user?->id, $filters),
+            "selectedMax" => isset($filters['max_payment']) ? $filters['max_payment'] : null,
+            "selectedMin" => isset($filters['min_payment']) ? $filters['min_payment'] : null,
+            "selectedType" => isset($filters['type']) ? $filters['type'] : null,
+            "selectedPlacementType" => isset($filters['placement_type']) ? $filters['placement_type'] : null,
+            "selectedSort" => isset($filters['sort']) ? $filters['sort'] : null,
+        ]);
     }
 
     public function list(array $filters = null)
     {
         $user = Auth::user();
-        return to_route('adverts.index',  ["data" => [
-            "adverts" => (new AdvertRepository())->filtered($user?->id, $filters),
-            "selectedType" => isset($filters['type']) ? $filters['type'] : null,
-            "selectedPlacementType" => isset($filters['placement_type']) ? $filters['placement_type'] : null,
-            "selectedSort" => isset($filters['sort']) ? $filters['sort'] : null,
-        ]]);
+        return to_route('adverts.index',  );
     }
 
     public function show(int $id)
