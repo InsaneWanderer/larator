@@ -91,10 +91,9 @@
                         </div>
                         <div class="property_content">
                             <div class="main_pro">
-                                    <h3><a href="#">Comfortable Apartment in Palace</a></h3>
+                                    <h3><a href="#">{{ $advert->updated_at }}</a></h3>
                                     <div class="mark_pro">
                                         <img src="img/svg_icon/location.svg" alt="">
-                                        <span>Popular Properties</span>
                                     </div>
                                     <span class="amount">{{ $advert->payment }} руб.</span>
                             </div>
@@ -143,7 +142,7 @@
     }
 
     function btnsend() {
-        // var form = frmmain
+        var form = frmmain
         // for (var i = 0; i < form.elements.length; i++) {
         //     var name = form.elements[i].name;
         //     console.log(name + " " + form.elements[i].value);
