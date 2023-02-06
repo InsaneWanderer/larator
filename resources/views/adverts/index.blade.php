@@ -29,8 +29,8 @@
                                                 <div class="single_field range_slider">
                                                     <label for="#">Цена</label>
                                                     <div id="slider"></div>
-                                                    <input hidden name="min_payment" value="{{ $selectedMinPayment ?? 0 }}">
-                                                    <input hidden name="max_payment" value="{{ $selectedMaxPayment ?? $maxPayment }}">
+                                                    <input hidden name="min_payment" value="{{ $selectedMin ?? 0 }}">
+                                                    <input hidden name="max_payment" value="{{ $selectedMax ?? $maxPayment }}">
                                                 </div>
                                                 <div class="single-field max_width ">
                                                     <label for="#">Тип помещения</label>
@@ -143,11 +143,11 @@
     }
 
     function btnsend() {
-        var form = frmmain
-        for (var i = 0; i < form.elements.length; i++) {
-            var name = form.elements[i].name;
-            console.log(name + " " + form.elements[i].value);
-        }
+        // var form = frmmain
+        // for (var i = 0; i < form.elements.length; i++) {
+        //     var name = form.elements[i].name;
+        //     console.log(name + " " + form.elements[i].value);
+        // }
         form.submit()
     }
 
@@ -174,11 +174,11 @@
     // // slider call
     $('#slider').slider({
         range: true,
-        min: {{ 0 }},
-        max: {{ $maxPayment }},
+        min: 0 ,
+        max: {{  $maxPayment }},
         step: 1,
-        values: [getQueryString('minval') ? getQueryString('minval') : {{ 10  }}, getQueryString('maxval') ?
-            getQueryString('maxval') : {{ $maxPayment }}
+        values: [getQueryString('minval') ? getQueryString('minval') : {{  $selectedMin ?? 0  }}, getQueryString('maxval') ?
+            getQueryString('maxval') : {{ $selectedMax ?? $maxPayment }}
         ],
 
         slide: function (event, ui) {
