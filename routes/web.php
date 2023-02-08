@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdvertController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +20,13 @@ use Illuminate\Support\Facades\Route;
 Route::match(['GET', 'POST'], "/", [AdvertController::class, 'index'])->name('adverts.index');
 // Route::post('/filtrate', [AdvertController::class, 'filtindex'])->name('adverts.index.post');
 
-Route::get('/login')->name('login');
-Route::post('/login', "AuthController@auth");
+Route::get('/login', [AuthController::class, 'logForm'])->name('login');
+Route::post('/login',[AuthController::class, 'auth']);
 
-// Route::post('/logout', "AuthController@logout")->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/registrate', [AuthController::class, 'regForm'])->name('registrate');
+Route::post('/registrate',[AuthController::class, 'registrate']);
 // Route::get('/registrate')->name('registrate');
 // Route::post('/registrate', "AuthController@registrate");
 

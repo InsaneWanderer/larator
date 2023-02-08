@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthRepository
 {
@@ -11,10 +12,9 @@ class AuthRepository
         return User::create($data);
     }
 
-    public function auth(array $data) : User
+    public function auth(array $data) : ?User
     {
         return User::where('email', $data['email'])
-            ->where('password', $data['password'])
             ->first();
     }
 }

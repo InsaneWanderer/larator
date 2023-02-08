@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function regForm()
+    {
+        return view('auth.registrate');
+    }
+
     public function registrate(Request $request)
     {
         $data = $request->validate([
@@ -32,5 +37,10 @@ class AuthController extends Controller
     public function logout()
     {
         return (new AuthService)->logout();
+    }
+
+    public function logForm()
+    {
+        return view('auth.login');
     }
 }

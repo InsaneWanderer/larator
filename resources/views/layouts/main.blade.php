@@ -55,7 +55,7 @@
                                 <div class="Appointment">
                                     @if (Auth::user())
                                         <div class="book_btn d-none d-lg-block">
-                                            <a href="{{ route('adverts.create') }}">Создать объявление</a>
+                                            {{-- <a href="{{ route('adverts.create') }}">Создать объявление</a> --}}
                                         </div>
                                         <div class="book_btn d-none d-lg-block">
                                             <a href="{{ route('logout') }}">Выйти</a>
