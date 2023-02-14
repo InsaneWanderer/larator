@@ -87,7 +87,10 @@
                 <div class="col-xl-4 col-md-6 col-lg-4">
                     <div class="single_property">
                         <div class="property_thumb">
-                            <div class="property_tag">{{ $advert->type == 'Sell' ? 'Продажа' : 'Аренда'}}</div>
+                            <div class="property_tag">
+                                {{ $advert->type == 'Sell' ? 'Продажа' : 'Аренда'}}
+                            </div>
+                            <img src="{{ url($advert->media->first()->file_name) }}" alt="{{ url($advert->media->first()->file_name) }}">
                         </div>
                         <div class="property_content">
                             <div class="main_pro">

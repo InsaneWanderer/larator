@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['mediaable_type', 'mediaable_id', 'file_name'];
+
+    public function mediaable()
+    {
+        return $this->morphTo();
+    }
 }
