@@ -6,8 +6,10 @@ use App\Enums\Advert\AdvertPlacementType;
 use App\Enums\Advert\AdvertType;
 use App\Enums\Sort\SortType;
 use App\Models\Advert;
+use App\Models\Media;
 use App\Repositories\AdvertRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdvertService
 {
@@ -22,7 +24,21 @@ class AdvertService
         
         $advert = (new AdvertRepository())->create($data);
 
-        return to_route('adverts.show', ['advert' => $advert]);
+        if (isset($data['images'])) {
+            $mediaData = [];
+            foreach ($data['images'] as $image) {
+                $name = "ad-{$advert->id}-" . $image->getClientOriginalName();
+                $image->move(public_path() . "/img/start_images/", $name);
+                $mediaData[] = [
+                    "mediaable_type" => Advert::class,
+                    "mediaable_id" => $advert->id,
+                    "file_name" => "storage/adverts/{$advert->id}/images/{$name}",
+                ];
+            }
+            Media::insert($mediaData);
+        }
+
+        return to_route('adverts.index');
     }
 
     public function index(?array $filters)

@@ -90,7 +90,11 @@
                             <div class="property_tag">
                                 {{ $advert->type == 'Sell' ? 'Продажа' : 'Аренда'}}
                             </div>
-                            <img src="{{ url($advert->media->first()->file_name) }}" alt="{{ url($advert->media->first()->file_name) }}">
+                            {{-- TODO Images by storage --}}
+                            @php
+                                $img = asset("img/start_images/" . substr($advert->media?->first()?->file_name, strrpos($advert->media?->first()?->file_name, "/")));
+                            @endphp
+                            <img src="{{ $img }}">
                         </div>
                         <div class="property_content">
                             <div class="main_pro">

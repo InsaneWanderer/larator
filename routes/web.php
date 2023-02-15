@@ -30,7 +30,7 @@ Route::post('/registrate',[AuthController::class, 'registrate']);
 // Route::get('/registrate')->name('registrate');
 // Route::post('/registrate', "AuthController@registrate");
 
-// Route::get('/addverts/create')->name('adverts.create');
-// Route::post('/addverts/create', "AdvertController@create");
+Route::get('/addverts/create', [AdvertController::class, "createForm"])->name('adverts.create');
+Route::post('/addverts/create',  [AdvertController::class, "create"]);
 
 // Route::get('/addverts/{addvert}', "AdvertController@show")->name('adverts.show');

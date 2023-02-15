@@ -35,15 +35,22 @@ class AdvertController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
-            'type' => ['required', new Enum(AdvertType::class)],
-            'placement_type' => ['required', new Enum(AdvertPlacementType::class)],
+            'type' => ['required', Rule::in(AdvertType::casesString())],
+            'placement_type' => ['required', Rule::in(AdvertPlacementType::casesString())],
             'address' => ['required', 'string'],
             'description' => ['required', 'string'],
             'payment' => ['required', 'integer', 'min:0'],
             'square' => ['required', 'integer', 'min:0'],
+            'images' => ['array'],
         ]);
 
         return (new AdvertService())->create($data);
+    }
+
+    public function createForm()
+    {
+        return view("adverts.form", ["advert" => null, "types" => AdvertType::cases(),
+        "placementTypes" => AdvertPlacementType::cases()]);
     }
 
     public function show(int $id)

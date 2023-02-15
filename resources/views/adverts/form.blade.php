@@ -9,47 +9,56 @@
                 <div class="property_wrap">
                     <div class="slider_text text-center justify-content-center">
         
-                        <form method="POST" action="">
+                        <form method="POST" action="" enctype="multipart/form-data">
                             @csrf
-                            <h2>Регистрация</h2>
+                            <h2>Добавить объявление</h2>
                             <div class="mt-10">            
-                                <input type="text" name="surname" placeholder="Фамилия"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Фамилия'" required
+                                <input type="text" name="address" placeholder="Адрес" value="{{ $advert?->name }}"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Адрес'" required
+                                    class="single-input">
+                            </div>
+                            <div class="input-group-icon mt-10">
+								<div class="form-select" id="default-select-1">
+                                    <select name="type">
+                                        <option>Тип объявления</option>
+                                        @foreach ($types as $type)
+                                            <option value="{{ $type->name }}" {{ $advert?->type == $type->name ? "selected" : "" }}>{{ $type->ru() }}</option>
+                                        @endforeach
+									</select>
+								</div>
+							</div>
+                            <div class="input-group-icon mt-10">
+								<div class="form-select" id="default-select-2">
+                                    <select name="placement_type">
+                                        <option>Тип помещения</option>
+                                        @foreach ($placementTypes as $placementType)
+                                            <option value="{{ $placementType->name }}" {{ $advert?->placement_type == $placementType->name ? "selected" : "" }}>{{ $placementType->ru() }}</option>
+                                        @endforeach
+									</select>
+								</div>
+							</div>
+                            <div class="mt-10">            
+                                <input type="text" name="square" placeholder="Площадь" required
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Площадь'"
                                     class="single-input">
                             </div>
                             <div class="mt-10">            
-                                <input type="text" name="name" placeholder="Имя"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Имя'" required
+                                <input type="text" name="payment" placeholder="Цена" required
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Цена'"
                                     class="single-input">
                             </div>
                             <div class="mt-10">            
-                                <input type="text" name="patronymic" placeholder="Отчество"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Отчество'"
+                                <input type="text" name="description" placeholder="Описание"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Описание'"
                                     class="single-input">
                             </div>
                             <div class="mt-10">            
-                                <input type="text" name="phone" placeholder="Телефон"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Телефон'" required
-                                    class="single-input">
-                            </div>
-                            <div class="mt-10">            
-                                <input type="email" name="email" placeholder="Email"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required
-                                    class="single-input">
-                            </div>
-                            <div class="mt-10">
-                                <input type="password" name="password" placeholder="Пароль"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Пароль'" required
-                                    class="single-input">
-                            </div>
-                            
-                            <div class="mt-10">
-                                <input type="password" name="password_confirmation" placeholder="Повторите пароль"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Повторите пароль'" required
+                                <input type="file" multiple name="images[]" placeholder="Файлы"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Файлы'"
                                     class="single-input">
                             </div>
                             <div class="mt-5">
-                                <button type="submit" class="genric-btn success-border circle">Зарегистрироваться</button>
+                                <button type="submit" class="genric-btn success-border circle">Создать</button>
                             </div>
                             
                             @if ($errors->any())
